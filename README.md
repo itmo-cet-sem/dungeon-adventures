@@ -1,4 +1,3 @@
-# dungeon-adventures
 # General description
 This project is a survival game where the ultimate goal of the player is to get out of the dungeon. 
 A sequence of locations will be given and in each of them a player will have to overcome various tests.
