@@ -39,7 +39,7 @@ public class MenuSettings : MonoBehaviour {
 	{
 		Debug.Log (resolutionIndex);
 		Resolution resolution = resolutions[resolutionIndex];
-		Screen.SetResolution (resolution.width, resolution.height, Screen.fullScreen);
+		Screen.SetResolution (resolution.width, resolution.height,Screen.fullScreen);
 	}
 
 
