@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Main_menu.unity
+    guid: ecb358c854a5c654a87a0972fc419899
+  - enabled: 1
+    path: Assets/Scenes/cave.unity
+    guid: 954ad2754bcbe45c4a9d6b2fcf9b6f2a
+  m_configObjects: {}
