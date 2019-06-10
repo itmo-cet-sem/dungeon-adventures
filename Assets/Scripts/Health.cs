@@ -5,26 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
-    public float HungerTime = 5;  // через сколько секунд отнимаем еду
-    public float PlayerHealth ; // переменная жизни (в данный момент)
-    public float MaxHealth ; // максимально количество жизни
-    public float Stamina  ; // переменная силы (сколько в данный момент)
-    public float MaxStamina ; // максимальное количество силы
-    public float Hungreed ; // переменная голода (в данный момент)
-    public float MaxHungreed ; // максимальное количество еды
+    public float HungerTime = 5;  
+    public float PlayerHealth ; 
+    public float MaxHealth ; 
+    public float Stamina  ; 
+    public float MaxStamina ; 
+    public float Hungreed ; 
+    public float MaxHungreed ; 
 
     Animator anim;                                                                              
-    Movement Movement;
+    Movement movement;
     bool isDead = false;
-    float timer;
+    public float timer = 1;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
-        Movement = GetComponent<Movement>();
+        movement = GetComponent<Movement>();
     }
-
-
 
     void Start()
     {
@@ -82,10 +80,53 @@ public class Health : MonoBehaviour
                 }
             }
         }
-      
+        if (movement.run == true)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                Stamina -= 5;
+                timer = 1;
+            }
+            if (timer <= 0 | Stamina <= 0)
+            {
+                timer = 0f;
+            }
+        }
+        else if (movement.run == false)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                Stamina += 1;
+                timer = 1;
+            }
+            if (timer <= 0 | Stamina >= MaxStamina)
+            {
+                timer = 0f;
+                Stamina = MaxStamina;
+            }
+        }
+
+
         if (PlayerHealth <= 0 )
         {
             Death();
+        }
+
+        //Для тестирования
+        if (Input.GetKeyDown(KeyCode.F) && PlayerHealth >= 0)
+        {
+            Death();
+        }
+
+        if (Input.GetKeyDown(KeyCode.G) && Hungreed >= 0)
+        {
+            Hungreed = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Hungreed += 30;
         }
     } 
     void Death()
@@ -95,41 +136,17 @@ public class Health : MonoBehaviour
         PlayerHealth = 0;
         Hungreed = 0;
         Stamina = 0;
-        Movement.enabled = false;
-        
+        movement.enabled = false;
+        SceneManager.LoadScene("deathMenu");
     }     
        
     void OnGUI()
     { 
         if (PlayerHealth > 0)
         {
-            GUI.Label(new Rect(10, 80, 120, 20), "Жизни: " + PlayerHealth + "/" + MaxHealth); //вывод здоровья на экран
-            GUI.Label(new Rect(10, 60, 120, 20), "Голод: " + Hungreed); //вывод голода на экран
-            GUI.Label(new Rect(10, 40, 120, 20), "Сила: " + Stamina); //вывод силы на экран
+            GUI.Label(new Rect(10, 80, 120, 20), "Здоровье: " + PlayerHealth + "/" + MaxHealth);
+            GUI.Label(new Rect(10, 60, 120, 20), "Сытость: " + Hungreed + "/" + MaxHungreed); 
+            GUI.Label(new Rect(10, 40, 120, 20), "Сила: " + Stamina + "/" + MaxStamina); 
         }
-
-        if (isDead == true)
-        {
-            if (GUI.Button(new Rect((float)(Screen.width / 2), (float)(Screen.height / 2) - 150f, 150f, 45f), "Начать с начала"))
-            {
-                SceneManager.LoadScene("cave");
-            }
-
-            if (GUI.Button(new Rect((float)(Screen.width / 2), (float)(Screen.height / 2) - 100f, 150f, 45f), "В Меню"))
-            {
-               
-                SceneManager.LoadScene("Main_menu");
-
-            }
-            if (GUI.Button(new Rect((float)(Screen.width / 2), (float)(Screen.height / 2) - 50f, 150f, 45f), "Выйти из игры"))
-            {
-                Debug.Log("Quit is done");
-                Application.Quit();
-
-            }
-
-        }
-
     }
-
 }

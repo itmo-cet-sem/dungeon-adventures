@@ -7,10 +7,13 @@ public class Movement : MonoBehaviour
     public Animator anim;
     public Rigidbody rbody;
 
+
     private float inputH;
     private float inputV;
-    private bool run;
-    private bool jump;
+    public bool run;
+    public bool jump;
+    public float gravity = 20.0f;
+
 
     public float speed = 2.0f;
     public float rotationSpeed = 75.0f;
@@ -26,7 +29,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
+
         float translation = Input.GetAxis("Vertical") * speed;
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
         translation *= Time.deltaTime;
@@ -35,7 +38,7 @@ public class Movement : MonoBehaviour
         transform.Translate(0, 0, translation);
         transform.Rotate(0, rotation, 0);
 
-        if (translation !=0)
+        if (translation != 0)
         {
             anim.SetBool("IsWalking", true);
         }
@@ -64,9 +67,10 @@ public class Movement : MonoBehaviour
             jump = false;
             anim.SetBool("jump", jump);
         }
-        
+
         anim.SetBool("run", run);
         anim.SetBool("jump", jump);
-                          
-    }
+
+    }   
+     
 }
